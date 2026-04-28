@@ -8,17 +8,19 @@
 #include "McuRTOS.h"
 #include <stdio.h>
 #if PL_CONFIG_USE_GCOV
-  #include "McuCoverage.h"
+#include "McuCoverage.h"
 #endif
 
-int main(void) {
+int main(void)
+{
   PL_Init();
   vTaskStartScheduler();
 #if PL_CONFIG_USE_GCOV
   McuCoverage_WriteFiles(); /* write coverage data files */
-#endif /* PL_CONFIG_USE_GCOV */
+#endif                      /* PL_CONFIG_USE_GCOV */
 
-  for(;;) {
+  for (;;)
+  {
     /* do not return from main() */
   }
   return 0;

@@ -115,6 +115,20 @@ if (ENABLE_UNIT_TESTING)
     message(STATUS "BUILD_TESTING is ON")
   endif()
 
+  # On the host start: JLinkRemoteServerCL -UseTunnel -TunnelBySN -select="<serial>"
+  # Replace <serial> with your J-Link serial number (shown by JLinkRemoteServerCL on startup).
+  # For direct IP (host.docker.internal): use --ip "192.168.65.254" instead.
+  set(JRUN_CTEST_COMMAND JRun --verbose --device RP2040_M0_0 --rtt -if SWD --pc off --sp off --ip "tunnel:801000382")
+
+  add_test(
+    NAME Led_1
+    COMMAND ${JRUN_CTEST_COMMAND} --args "Led_1" ${TEST_EXECUTABLE}
+  )
+  add_test(
+    NAME Led_2
+    COMMAND ${JRUN_CTEST_COMMAND} --args "Led_2" ${TEST_EXECUTABLE}
+  )
+
   message(STATUS "Adding unity")
   add_subdirectory(${MCULIB_DIR}/unity   unity)
 endif()
